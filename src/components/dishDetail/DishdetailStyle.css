@@ -1,0 +1,8 @@
+.comm-bold {
+    font-weight: 500;
+}
+
+.listStyle {
+    list-style-type: none;
+    padding: 0;
+}
