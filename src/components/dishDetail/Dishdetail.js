@@ -1,79 +1,56 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 import './DishdetailStyle.css';
 
-class DishdetailComponent extends Component {
+function RenderDish({ dishz }) {
+    return (
+        <Card>
+            <CardImg width="100%" src={dishz.image} alt={dishz.name} />
+            <CardBody>
+                <CardTitle>{dishz.name}</CardTitle>
+                <CardText>{dishz.description}</CardText>
+            </CardBody>
+        </Card>
+    );
+}
 
-    constructor(props) {
-        console.log('DishDetail constructor invoked');
-        
-        super(props);
+function RenderComments({ commentz }) {
 
-        this.state = {
-            
-        };
-    }
+    const commz = commentz.comments.map((comm) => {
+        return (
+            <div key={comm.id}>
+                <ul className="listStyle">
+                    <li className="comm-bold">{comm.comment}</li>
+                    <li className="comm-bold">-- {comm.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comm.date)))}</li>
+                </ul>
+            </div>
+        );
+    })
 
-    componentDidMount() {
-        console.log('DishDetail componentDidMount invoked');
-    }
+    return (commz);
+}
 
-    componentDidUpdate() {
-        console.log('DishDetail componentDidUpdate invoked');
-    }
-
-    renderDish(dish) {
-        if(dish != null) {
-            return (
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12 col-md-5 m-2">
-                            <Card>
-                                <CardImg width="100%" src={dish.image} alt={dish.name} />
-                                <CardBody>
-                                    <CardTitle>{dish.name}</CardTitle>
-                                    <CardText>{dish.description}</CardText>
-                                </CardBody>
-                            </Card>
-                        </div>
-                        <div className="col-12 col-md-5 m-2">
-                            <h3>Comments</h3>
-                            {this.props.Dishdetail.comments.map((comm) => {
-                                return (
-                                    <div key={comm.id}>
-                                        <ul className="listStyle">
-                                            <li className="comm-bold">{comm.comment}</li>
-                                            <li className="comm-bold">-- {comm.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comm.date)))}</li>
-                                        </ul>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </div>
-            )
-        }
-        else {
-            return (
-                <div>
-                </div>
-            );
-        }
-    }
-
-    render() {
-
-        console.log("DishDetail render invoked");
-
+const DishdetailComponent = (props) => {
+    if (props.Dishdetail != null) {
         return (
             <div className="container">
                 <div className="row">
-                    {this.renderDish(this.props.Dishdetail)}
+                    <div className="col-12 col-md-5 m-2">
+                        <RenderDish dishz={props.Dishdetail} />
+                    </div>
+                    <div className="col-12 col-md-5 m-2">
+                        <h3>Comments</h3>
+                        <RenderComments commentz={props.Dishdetail} />
+                    </div>
                 </div>
             </div>
         );
     }
-
+    else {
+        return (
+            <div></div>
+        );
+    }
 }
 
 export default DishdetailComponent;
