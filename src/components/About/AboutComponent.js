@@ -4,27 +4,30 @@ import { Link } from 'react-router-dom';
 
 function RenderLeader({ leaders }) {
 
-    const leader = leaders.map((lead) => {
-        return (
-            <div key={lead.id} className="mb-2">
-                <Media>
-                    <Media left>
-                        <Media object src={lead.image} alt="leader image" />
-                    </Media>
-                    <Media body className="ml-5">
-                        <Media heading>{lead.name}</Media>
-                        <p>{lead.designation}</p>
-                        <p>{lead.description}</p>
-                    </Media>
+    return (
+        <div key={leaders.id} className="mb-2">
+            <Media>
+                <Media left>
+                    <Media object src={leaders.image} alt="leader image" />
                 </Media>
-            </div>
-        );
-    })
+                <Media body className="ml-5">
+                    <Media heading>{leaders.name}</Media>
+                    <p>{leaders.designation}</p>
+                    <p>{leaders.description}</p>
+                </Media>
+            </Media>
+        </div>
+    );
 
-    return (leader);
 }
 
 function About(props) {
+
+    const leaders = props.leaders.map((leader) => {
+        return (
+            <RenderLeader leaders={leader} />
+        );
+    });
 
     return(
         <div className="container">
@@ -82,7 +85,7 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        <RenderLeader leaders={props.leaders} />
+                        {leaders}
                     </Media>
                 </div>
             </div>
